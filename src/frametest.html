@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page Title2</title>
+</head>
+
+<body>
+    <h1>This is a frame</h1>
+    <p id="content1">content1.</p>
+    <p id="content2">content2.</p>
+    <button type="button" id="send2parent">send2parent</button>
+</body>
+
+<script>
+    var ob = document.getElementById('send2parent');
+    var msg = 'hellow,im your son!!'
+    ob.onclick = function () {
+        if (parent.document.readyState == "complete") {
+            parent.window.fnParent(msg); //关键
+        }
+    }
+
+    function fnChild(arg) {
+        document.getElementById("content1").innerHTML = arg
+        console.log(arg); //确实得到了 hellow,i'm your father!!
+    }
+
+    window.addEventListener('message', function () {
+        if (event.data == 'hellow') {
+            document.getElementById('content2').innerText = event.data;
+        }
+    })
+</script>
+
+</html>

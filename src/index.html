@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <p id="content">content.</p>
+    <iframe src="frametest.html" name='child1' height="200" width="400" title="Iframe Example"></iframe>
+    <iframe src="frametest.html" id='childId2' height="200" width="400" title="Iframe Example"></iframe>
+    <br>
+    <button type="button" id="send2child1">send2child1</button>
+    <button type="button" id="send2child2">send2child2</button>
+</body>
+
+<script>
+    var ob = document.getElementById('send2child1');
+    var msg = 'hellow,im your father!!'
+    ob.onclick = function () {
+        if (child1.document.readyState == "complete") {
+            child1.window.fnChild(msg); //关键
+        }
+    }
+
+    var ob2 = document.getElementById('send2child2')
+    var msg2 = 'im your father 2'
+    ob2.onclick = function () {
+        var frame2 = document.getElementById('childId2')
+        frame2.contentWindow.postMessage("hellow", '*')
+    }
+
+    function fnParent(arg) {
+        document.getElementById("content").innerHTML = arg
+        console.log(arg); //确实得到了 hellow,i'm your father!!
+    }
+</script>
+
+</html>
